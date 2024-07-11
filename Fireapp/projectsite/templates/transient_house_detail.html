@@ -1,24 +1,30 @@
-{% extends 'base.html'%}
-{% block context %}
-<div>
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
     <h1>{{ transient_house.name }}</h1>
-    <p>Description: {{ transient_house.description }}</p>
-    <p>Price per night: {{ transient_house.price_per_night }}</p>
-    <p>Capacity: {{ transient_house.capacity }}</p>
+    <p><strong>Description:</strong> {{ transient_house.description }}</p>
+    <p><strong>Price per Night:</strong> {{ transient_house.price_per_night }}</p>
+    <p><strong>Capacity:</strong> {{ transient_house.capacity }}</p>
 
-    <h2>Location:</h2>
-    <p>Address: {{ transient_house.location.address }}</p>
-    <p>City: {{ transient_house.location.city }}</p>
-    <p>Country: {{ transient_house.location.country }}</p>
-    <p>Latitude: {{ transient_house.location.latitude }}</p>
-    <p>Longitude: {{ transient_house.location.longitude }}</p>
+    <h2>Location</h2>
+    <p><strong>Name:</strong> {{ transient_house.location.name }}</p>
+    <p><strong>Address:</strong> {{ transient_house.location.address }}, {{ transient_house.location.city }}, {{ transient_house.location.country }}</p>
+    <p><strong>Latitude:</strong> {{ transient_house.location.latitude }}</p>
+    <p><strong>Longitude:</strong> {{ transient_house.location.longitude }}</p>
 
-    <h2>Rooms:</h2>
+    <h2>Rooms</h2>
     <ul>
-    {% for room in transient_house.rooms.all %}
-        <li>{{ room.name }} - {{ room.description }}</li>
-    {% endfor %}
+        {% for room in transient_house.rooms.all %}
+        <li>
+            <h3>{{ room.name }}</h3>
+            <p><strong>Description:</strong> {{ room.description }}</p>
+            <p><strong>Specification:</strong> {{ room.specification.name }}</p>
+        </li>
+        {% empty %}
+        <li>No rooms available.</li>
+        {% endfor %}
     </ul>
 </div>
-
+    
 {% endblock %}
