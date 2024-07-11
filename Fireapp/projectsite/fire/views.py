@@ -5,14 +5,14 @@ from django.db.models import Count
 from datetime import datetime
 from django.shortcuts import render
 from django.views.generic.list import ListView
-from fire.models import TransientHouseLocations, TransientHouse, Owner
+from fire.models import TransientHouse, Owner
 from datetime import timedelta
 import json
 from django.core.serializers import serialize
 from django.shortcuts import get_object_or_404, render
 
 class HomePageView(ListView):
-    model = TransientHouseLocations
+    model = TransientHouse
     context_object_name = 'home'
     template_name = "home.html"
 
@@ -29,10 +29,8 @@ class ChartView(ListView):
 
 def transient_house_location(request):
     # Fetch all TransientHouseLocations
-    transient_house_locations = TransientHouseLocations.objects.all()
+    transient_house_locations = TransientHouse.objects.all()
     
-
-    # Serialize the necessary fields including TransientHouse details through reverse relationship
     transient_house_json = serialize('json', transient_house_locations, 
                                      fields=('name', 'latitude', 'longitude', 'transienthouse__id'))
 

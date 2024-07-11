@@ -8,9 +8,11 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
-
-class TransientHouseLocations(BaseModel):
-    name = models.CharField(max_length=150)
+class TransientHouse(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    price_per_night = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    capacity = models.PositiveIntegerField(null=True, blank=True)
     latitude = models.DecimalField(
         max_digits=22, decimal_places=16, null=True, blank=True)
     longitude = models.DecimalField(
@@ -19,22 +21,15 @@ class TransientHouseLocations(BaseModel):
     city = models.CharField(max_length=150) 
     country = models.CharField(max_length=150)
 
+    def __str__(self):
+        return self.name
+    
 class Owner(BaseModel):
     first_name = models.CharField(max_length=150)
     middle_name = models.CharField(max_length=150, null=True, blank=True)
     last_name = models.CharField(max_length=150)
     contact_information = models.CharField(max_length=150)
 
-class TransientHouse(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    price_per_night = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    capacity = models.PositiveIntegerField(null=True, blank=True)
-    location = models.OneToOneField(TransientHouseLocations, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
-    
 class RoomSpecifiction(models.Model):
     name = models.CharField(max_length=255)
 

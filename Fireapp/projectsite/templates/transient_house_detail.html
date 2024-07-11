@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+
+
 {% block content %}
 
 <div class="container">
@@ -8,10 +10,10 @@
     <p><strong>Capacity:</strong> {{ transient_house.capacity }}</p>
 
     <h2>Location</h2>
-    <p><strong>Name:</strong> {{ transient_house.location.name }}</p>
-    <p><strong>Address:</strong> {{ transient_house.location.address }}, {{ transient_house.location.city }}, {{ transient_house.location.country }}</p>
-    <p><strong>Latitude:</strong> {{ transient_house.location.latitude }}</p>
-    <p><strong>Longitude:</strong> {{ transient_house.location.longitude }}</p>
+    <p><strong>Name:</strong> {{ transient_house.name }}</p>
+    <p><strong>Address:</strong> {{ transient_house.address }}, {{ transient_house.city }}, {{ transient_house.country }}</p>
+    <p><strong>Latitude:</strong> {{ transient_house.latitude }}</p>
+    <p><strong>Longitude:</strong> {{ transient_house.longitude }}</p>
 
     <h2>Rooms</h2>
     <ul>
