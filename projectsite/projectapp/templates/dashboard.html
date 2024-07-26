@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <style>
+        body{
+          background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+        }
+      </style>
+    <h1>{{ page_title }}</h1>
+    <p>Welcome, {{ user.username }}!</p>
+    <!-- Add more dashboard content as needed -->
+</div>  
+{% endblock %}

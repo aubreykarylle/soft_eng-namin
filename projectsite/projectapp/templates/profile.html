@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">My Profile</h3>
+                </div>
+                <style>
+                    body{
+                        background: rgb(238,174,221);
+                        background: radial-gradient(circle, rgba(238,174,221,1) 0%, rgba(148,233,233,1) 100%); 
+                    }
+                  </style>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <div class="avatar-lg mb-3">
+                                <img src="{% static 'img/profile.jpg' %}" alt="Profile Picture" class="avatar-img rounded-circle" style="width: 150px; height: 150px;">
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row mb-3">
+                                <div class="col-sm-6">
+                                    <strong>User name:</strong> {{ user.profile.user_name }}
+                                </div>
+                                <div class="col-sm-6">
+                                    <strong>Email:</strong> {{ user.profile.email }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-6">
+                                    <strong>First Name:</strong> {{ user.profile.first_name }}
+                                </div>
+                                <div class="col-sm-6">
+                                    <strong>Last Name:</strong> {{ user.profile.last_name }}
+                                </div>
+                            </div>
+                            {% if user.profile %}
+                            <div class="row mb-3">
+                                <div class="col-sm-6">
+                                    <strong>Phone:</strong> {{ user.profile.phone_number }}
+                                </div>
+                                <div class="col-sm-6">
+                                    <strong>Address:</strong> {{ user.profile.address }}
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="row mb-3">
+                                <div class="col-sm-12">
+                                    No additional profile information found.    
+                                </div>
+                            </div>
+                            {% endif %}
+                            <hr>
+                            <!-- Additional profile details as needed -->
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <a href="{% url 'edit_profile' %}" class="btn btn-primary btn-sm">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

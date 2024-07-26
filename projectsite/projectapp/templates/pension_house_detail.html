@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+    <h1>{{ transient_house.name }}</h1>
+    <p><strong>Description:</strong> {{ transient_house.description }}</p>
+    <p><strong>Price per Night:</strong> {{ transient_house.price_per_night }}</p>
+    <p><strong>Capacity:</strong> {{ transient_house.capacity }}</p>
+
+    <h2>Location</h2>
+    <p><strong>Name:</strong> {{ transient_house.name }}</p>
+    <p><strong>Address:</strong> {{ transient_house.address }}, {{ transient_house.city }}, {{ transient_house.country }}</p>
+    <p><strong>Latitude:</strong> {{ transient_house.latitude }}</p>
+    <p><strong>Longitude:</strong> {{ transient_house.longitude }}</p>
+
+    <h2>Rooms</h2>
+    <ul>
+        {% for room in transient_house.rooms.all %}
+        <li>
+            <h3>{{ room.name }}</h3>
+            <p><strong>Description:</strong> {{ room.description }}</p>
+            <p><strong>Specification:</strong> {{ room.specification.name }}</p>
+        </li>
+        {% empty %}
+        <li>No rooms available.</li>
+        {% endfor %}
+    </ul>
+</div>
+    
+{% endblock %}

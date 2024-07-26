@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+<style>
+  body {
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+  }
+
+  .navbar-nav .nav-link {
+    color: #ffffff !important;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .navbar-nav .nav-link:hover {
+    color: #ffd700 !important;
+  }
+
+  .navbar {
+    background-color: rgba(0, 0, 139, 0.7);
+  }
+
+  .input-group .form-control {
+    height: 40px;
+  }
+
+  .input-group .input-group-text {
+    background-color: #ffffff;
+    border: none;
+    border-left: 1px solid #ddd;
+  }
+
+  .input-group .input-group-text i {
+    color: #000000;
+  }
+</style>
+
+<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'pension' %}">Pension</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'transient' %}">Transient</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'lodge' %}">Lodge</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+        </li>
+      </ul>
+      <form id="filter-form" method="GET" action="{% url 'home' %}" class="form-inline ml-auto">
+        <div class="input-group no-border">
+          <input type="text" name="search" value="{{ request.GET.search }}" class="form-control" placeholder="Search...">
+          <div class="input-group-append">
+            <button type="submit" class="input-group-text"><i class="nc-icon nc-zoom-split"></i></button>
+          </div>
+        </div>
+      </form>
+      <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}"><i class="fa fa-fw fa-sign-in"></i> Log in</a>
+        </li>
+        {% endif %}
+        {% if request.user.is_superuser %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-fw fa-power-off"></i> Logout</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- End Navbar -->
+
+<!-- home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <div class="big-display">
+        Welcome to Puerto Princesa TraveLoca
+    </div>
+</body>
+</html>
+<style>
+  /* static/css/styles.css */
+.big-display {
+    font-size: 5em; /* Adjust size as needed */
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20%;
+    color: #333; /* Adjust color as needed */
+}
+
+</style>
+
+{% endblock %}

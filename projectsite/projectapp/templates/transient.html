@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+<style>
+  body {
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+  }
+
+  .navbar-nav .nav-link {
+    color: #ffffff !important;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .navbar-nav .nav-link:hover {
+    color: #ffd700 !important;
+  }
+
+  .navbar {
+    background-color: rgba(0, 0, 139, 0.7);
+  }
+
+  .input-group .form-control {
+    height: 40px;
+  }
+
+  .input-group .input-group-text {
+    background-color: #ffffff;
+    border: none;
+    border-left: 1px solid #ddd;
+  }
+
+  .input-group .input-group-text i {
+    color: #000000;
+  }
+</style>
+
+<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'pension' %}">Pension</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'transient' %}">Transient</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'lodge' %}">Lodge</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+        </li>
+      </ul>
+      <form id="filter-form" method="GET" action="{% url 'home' %}" class="form-inline ml-auto">
+        <div class="input-group no-border">
+          <input type="text" name="search" value="{{ request.GET.search }}" class="form-control" placeholder="Search...">
+          <div class="input-group-append">
+            <button type="submit" class="input-group-text"><i class="nc-icon nc-zoom-split"></i></button>
+          </div>
+        </div>
+      </form>
+      <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}"><i class="fa fa-fw fa-sign-in"></i> Log in</a>
+        </li>
+        {% endif %}
+        {% if request.user.is_superuser %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-fw fa-power-off"></i> Logout</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-transparent">
+      <div class="card-header">
+        <h4 class="card-title text-center">Transient House</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Transient</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 text-center">
+            </div>
+            <div class="card-body">
+              <h2 class="card-title text-center">{{ transient_house.name }}</h2>
+              <p class="card-text"><strong>Description:</strong> {{ transient_house.description }}</p>
+              <p class="card-text"><strong>Price per Night:</strong> {{ transient_house.price_per_night }}</p>
+              <p class="card-text"><strong>Capacity:</strong> {{ transient_house.capacity }}</p>
+
+              <h3 class="mt-4">Location</h3>
+              <div class="location-info mb-4">
+                <p class="mb-1"><strong>Address:</strong> {{ transient_house.location.address }} {{ transient_house.location.city }} {{ transient_house.location.country }}</p>
+              </div>
+
+              <h3 class="mt-4">Rooms</h3>
+              <ul class="list-group mb-4">
+                {% if transient_house.rooms.exists %}
+                {% for room in transient_house.rooms.all %}
+                <li class="list-group-item">
+                  <div class="room-details">
+                    <h4 class="room-name mb-2">{{ room.name }}</h4>
+                    <p class="room-description mb-1"><strong>Description:</strong> {{ room.description }}</p>
+                    <p class="room-specification mb-0"><strong>Specification:</strong> {{ room.specification.name }}</p>
+                  </div>
+                </li>
+                {% endfor %}
+                {% else %}
+                <li class="list-group-item">No rooms available.</li>
+                {% endif %}
+              </ul>
+
+              <!-- Display image -->
+              <h3 class="mt-4">Image</h3>
+              <div class="image-container text-center mb-4">
+                {% if transient_house.images %}
+                <img src="{{ transient_house.images.url }}" class="img-fluid rounded" alt="Transient House Image">
+                {% else %}
+                <p>No image available.</p>
+                {% endif %}
+              </div>
+            </div>
+            <hr>
+            <!-- Go to Map Button -->
+            <div class="text-center">
+              <a href="{% url 'transient-house' %}" class="btn btn-primary">Go to Map</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
+
+{% endblock %}
